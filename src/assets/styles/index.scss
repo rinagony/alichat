@@ -1,0 +1,26 @@
+p,
+h1,
+h1,
+h3,
+h4,
+h5,
+h6,
+a,
+li,
+div,
+button,
+span {
+    font-family: 'Lora', serif;
+    font-family: 'Nanum Gothic', sans-serif;
+}
+
+:root {
+    --color-primary: #5c2e62;
+    --color-secondary: #e8e8e8;
+    --color-additional: #f9c4ff;
+    --color-additional-two: #c52bd7
+}
+
+body {
+    margin: 0;
+}
