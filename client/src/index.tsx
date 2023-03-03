@@ -4,15 +4,14 @@ import App from './App';
 import './assets/styles/index.scss'
 import { AuthProvider } from './context';
 import { store } from './redux/store';
-import { MuiThemeProvider } from '@material-ui/core/styles';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <AuthProvider>
-      <Provider store={store}>
+    <Provider store={store}>
         <App />
-      </Provider>
+    </Provider>
   </AuthProvider>
 );

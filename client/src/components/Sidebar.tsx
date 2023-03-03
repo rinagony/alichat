@@ -33,7 +33,6 @@ interface menuItemInteraface {
 function Sidebar({ children }: SidebarProps) {
     const navigate = useNavigate();
     const location = useLocation();
-    console.log(location.pathname, 'location')
     const menuItems: menuItemInteraface[] = [
         {
             title: 'My profile',

@@ -1,35 +1,31 @@
-import { createSelector } from 'reselect'
+import { createSlice } from '@reduxjs/toolkit'
+import type { PayloadAction } from '@reduxjs/toolkit'
+import { RootState } from './store'
+import CurrentUserInterface from '../interface'
 
-const currentUserSelector = createSelector(
-    (state: any) => state.currentUser,
-    (currentUser) => currentUser.user
-  )
+const initialState: CurrentUserInterface = {
+  auth: false,
+  userName: '',
+  uid: '',
+  loading: true,
+}
+export const currentUser = createSlice({
+  name: 'currentUser',
+  // `createSlice` will infer the state type from the `initialState` argument
+  initialState,
+  reducers: {
+    setCurrentUser: (state, action: PayloadAction<CurrentUserInterface>) => {
+      state.auth = action.payload.auth;
+      state.loading = action.payload.loading;
+      state.uid = action.payload.uid;
+      state.userName = action.payload.userName;
+    },
+  },
+})
 
-export default currentUserSelector;
+export const { setCurrentUser } = currentUser.actions
 
-// import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-// import CurrentUserInterface from '../interface'
-// import rootReducer from './reducers'
-// import currentUser from './reducers/reducer1'
-// import { RootState } from './store'
+// Other code such as selectors can use the imported `RootState` type
+export const selectorCurrentUser = (state: RootState) => state.currentUser
 
-// export const initialState: CurrentUserInterface = {
-// 	auth: false,
-// 	userName: '',
-//   uid: '',
-//   loading: true,
-// }
-
-// export const counterSlice = createSlice({
-//   name: 'currentUser',
-//   // `createSlice` will infer the state type from the `initialState` argument
-//   initialState,
-//   reducers: {
-//     currentUser
-//   }
-// })
-
-// // Other code such as selectors can use the imported `RootState` type
-// export const selectCount = (state: RootState) => state.currentUser
-
-// export default counterSlice.reducer
+export default currentUser.reducer

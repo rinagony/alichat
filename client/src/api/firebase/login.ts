@@ -1,7 +1,6 @@
-import { GoogleAuthProvider, signInWithPopup, getAuth, onAuthStateChanged } from 'firebase/auth';
+import { GoogleAuthProvider, signInWithPopup, signOut, getAuth, onAuthStateChanged } from 'firebase/auth';
 import app from '.';
 import CurrentUserInterface from '../../interface';
-import { setCurrentUserAction } from '../../redux/actions/action';
 
 const auth = getAuth(app);
 async function loginWithGoogle() {
@@ -20,6 +19,19 @@ async function loginWithGoogle() {
     }
 }
 
+async function signOutWithGoogle() {
+    try {
+        const result = await signOut(auth)
+
+        return result;
+    } catch (error: any) {
+        if (error.code !== 'auth/cancelled-popup-request') {
+            console.error(error);
+        }
+        return null;
+    }
+}
+
 function checkIfUserLogedIn() {
     return new Promise((resolve, reject) => {
         onAuthStateChanged(auth, (user) => {
@@ -30,9 +42,6 @@ function checkIfUserLogedIn() {
                     uid: user.uid,
                     loading: false,
                 }
-                // setCurrentUserAction(currentUser)
-                console.log('User is loged in', user)
-    
                 resolve(currentUser);
             } else {
                 const currentUser: CurrentUserInterface = {
@@ -41,7 +50,6 @@ function checkIfUserLogedIn() {
                     uid: '',
                     loading: false,
                 }
-                // setCurrentUserAction(currentUser)
                 resolve(currentUser)
             }
         });
@@ -49,4 +57,4 @@ function checkIfUserLogedIn() {
 }
 
 
-export { loginWithGoogle, checkIfUserLogedIn };
+export { loginWithGoogle, checkIfUserLogedIn, signOutWithGoogle };

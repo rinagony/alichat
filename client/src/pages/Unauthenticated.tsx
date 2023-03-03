@@ -3,6 +3,8 @@ import styled from "styled-components";
 import { Header } from "../components";
 import { useAuth } from "../helpers/auth";
 import GoogleIcon from '../assets/images/google.svg'
+import { useAppDispatch } from "../redux/hooks";
+import checkIfUserLogedInAction from "../redux/actions";
 
 const Wrapper = styled.div`
   height: 80vh;
@@ -50,7 +52,12 @@ const Icon = styled.img`
 
 function Unauthenticated() {
   const { login } = useAuth();
-
+  const dispatch = useAppDispatch();
+  const handleOnClick = () => {
+    login().then(() => {
+      checkIfUserLogedInAction(dispatch)
+    })
+  }
   return (
     <Wrapper>
       <Header fromUnauth />
@@ -59,7 +66,7 @@ function Unauthenticated() {
           <Description>
             AliChat is a messaging tool that allows you to send and receive messages from your friends and connect with people from all over the world!
           </Description>
-          <ButtonGoogle color="primary" onClick={login} className="login">
+          <ButtonGoogle color="primary" onClick={handleOnClick} className="login">
             Login with Google
             <Icon src={GoogleIcon} alt="Logo" />
           </ButtonGoogle>

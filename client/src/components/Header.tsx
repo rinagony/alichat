@@ -1,6 +1,9 @@
 import styled from "styled-components"
-import ButtonComponent from "./Button";
+import ButtonComponent from "../atoms/Button";
 import Container from '@mui/material/Container';
+import { signOutWithGoogle } from "../api/firebase/login";
+import checkIfUserLogedInAction from "../redux/actions";
+import { useAppDispatch } from "../redux/hooks";
 
 const WrapperHeader = styled.div`
     height: 4rem;
@@ -27,8 +30,11 @@ interface HeaderProps {
 }
 
 function Header({fromUnauth}: HeaderProps) {
+    const dispatch = useAppDispatch(); 
     const handleOnClick = () => {
-        console.log('click button')
+        signOutWithGoogle().then(() => {
+            checkIfUserLogedInAction(dispatch);
+        })
     }
     return (
         <WrapperHeader>
